@@ -38,7 +38,7 @@ function Navbar() {
               </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link fw-semibold" href="#about">
+              <a className="nav-link fw-semibold" href="/#about">
                 About Us
               </a>
             </li>

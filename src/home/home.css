@@ -32,7 +32,7 @@ body {
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Prevent the image from repeating */
   color: white; /* Ensure text is readable */
-  height: 100vh; /* Full viewport height */
+  height: 60vh; /* Full viewport height */
   width: 100%; /* Full viewport width */
   display: flex;
   align-items: center; /* Vertically center content */

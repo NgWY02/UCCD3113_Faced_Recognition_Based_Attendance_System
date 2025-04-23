@@ -1,17 +1,17 @@
-import { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./attendance.css";
 
 const uuid = require("uuid");
 
 function Attendance() {
   const [images, setImages] = useState([]);
-  const [uploadedImage, setUploadedImage] = useState(null); // Store uploaded image preview
+  const [uploadedImage, setUploadedImage] = useState(null);
   const [authResults, setAuthResults] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null); // Store the selected image for drawing
-  const [boundingBoxes, setBoundingBoxes] = useState([]); // Store bounding box data
-  const [isLoading, setIsLoading] = useState(false); // Loading state
-  const [isModalOpen, setIsModalOpen] = useState(false); // Modal state
-  const canvasRef = useRef(null); // Reference to the canvas element
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [boundingBoxes, setBoundingBoxes] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const canvasRef = useRef(null);
 
   async function sendImages(e) {
     e.preventDefault();
@@ -25,11 +25,11 @@ function Attendance() {
       return;
     }
 
-    setAuthResults([]); // Clear previous results
-    setBoundingBoxes([]); // Clear previous bounding boxes
-    setSelectedImage(null); // Clear previous selected image
-    setUploadedImage(null); // Hide uploaded image when processing starts
-    setIsLoading(true); // Set loading state
+    setAuthResults([]);
+    setBoundingBoxes([]);
+    setSelectedImage(null);
+    setUploadedImage(null);
+    setIsLoading(true);
 
     for (const image of images) {
       const studentImageName = uuid.v4();
@@ -48,9 +48,6 @@ function Attendance() {
           throw new Error(`Upload Failed: ${uploadResponse.statusText}`);
         }
 
-        console.log(`Image ${studentImageName} uploaded successfully`);
-
-        // Call authentication after successful upload
         const authResponse = await authenticate(studentImageName);
 
         if (authResponse?.Message?.toLowerCase() === "success") {
@@ -67,12 +64,11 @@ function Attendance() {
             })),
           ]);
 
-          // Set bounding boxes and selected image for drawing
           setBoundingBoxes(
             recognizedStudents.map((student) => ({
               ...student.boundingBox,
               name: `${student.firstName} ${student.lastName}`,
-              confidence: (student.confidence / 100).toFixed(2), // Scale confidence to 0-1
+              confidence: (student.confidence / 100).toFixed(2),
             }))
           );
           setSelectedImage(URL.createObjectURL(image));
@@ -92,7 +88,7 @@ function Attendance() {
         ]);
         console.error("Upload/Authentication Error:", error);
       } finally {
-        setIsLoading(false); // Stop loading state
+        setIsLoading(false);
       }
     }
   }
@@ -104,8 +100,6 @@ function Attendance() {
       }
     )}`;
 
-    console.log("Requesting authentication:", requestUrl);
-
     try {
       const response = await fetch(requestUrl, {
         method: "GET",
@@ -115,24 +109,12 @@ function Attendance() {
         },
       });
 
-      console.log("Response status:", response.status);
-
       if (!response.ok) {
-        console.error("API Error:", response.statusText);
-        return []; // Return empty array if API call fails
-      }
-
-      const rawData = await response.json();
-      console.log("Raw Response Data:", rawData);
-
-      if (!rawData.body) {
-        console.error("Invalid response format: Missing 'body' field");
         return [];
       }
 
+      const rawData = await response.json();
       const data = JSON.parse(rawData.body);
-      console.log("Parsed Response Data:", data);
-
       return data;
     } catch (error) {
       console.error("API Fetch Error:", error);
@@ -144,11 +126,10 @@ function Attendance() {
     const files = Array.from(e.target.files);
     if (files.length > 0) {
       setImages(files);
-      setUploadedImage(URL.createObjectURL(files[0])); // Set uploaded image preview
+      setUploadedImage(URL.createObjectURL(files[0]));
     }
   }
 
-  // Draw bounding boxes and names on the canvas
   useEffect(() => {
     if (selectedImage && boundingBoxes.length > 0) {
       const canvas = canvasRef.current;
@@ -156,17 +137,13 @@ function Attendance() {
       const img = new Image();
 
       img.onload = () => {
-        // Set canvas size to match the image
         canvas.width = img.width;
         canvas.height = img.height;
 
-        // Draw the image on the canvas
         ctx.drawImage(img, 0, 0, img.width, img.height);
 
-        // Draw bounding boxes and names
         boundingBoxes.forEach((box) => {
-          // Draw the bounding box
-          ctx.strokeStyle = "green"; // Set bounding box color to green
+          ctx.strokeStyle = "green";
           ctx.lineWidth = 2;
           ctx.strokeRect(
             box.Left * img.width,
@@ -175,8 +152,7 @@ function Attendance() {
             box.Height * img.height
           );
 
-          // Draw the name and confidence score
-          ctx.fillStyle = "green"; // Set font color to green
+          ctx.fillStyle = "green";
           ctx.font = "16px Arial";
           ctx.fillText(
             `${box.name} (CS: ${box.confidence})`,
@@ -191,72 +167,87 @@ function Attendance() {
   }, [selectedImage, boundingBoxes]);
 
   return (
-    <div className="App">
-      <h2>FACIAL RECOGNITION ATTENDANCE SYSTEM</h2>
-      <form onSubmit={sendImages}>
-        <input
-          type="file"
-          name="images"
-          accept="image/*"
-          multiple
-          onChange={handleImageChange}
-        />
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? "Processing..." : "Record Attendance"}
-        </button>
+    <div className="attendance-container">
+      <div className="title-bar">
+        <h1>Facial Recognition Attendance System</h1>
+      </div>
 
-        {/* Display uploaded image */}
+      <main className="main-content">
+        <section className="upload-section">
+          <h2>Upload Images</h2>
+          <form onSubmit={sendImages}>
+            <label className="upload-area">
+              <input
+                type="file"
+                name="images"
+                accept="image/*"
+                multiple
+                onChange={handleImageChange}
+              />
+              <p>Drag and drop images here, or click to select files.</p>
+            </label>
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? "Processing..." : "Record Attendance"}
+            </button>
+          </form>
+        </section>
+
         {uploadedImage && !isLoading && (
-          <div className="uploaded-image-container">
-            <h3>Uploaded Image</h3>
-            <img
-              src={uploadedImage}
-              alt="Uploaded Preview"
-              className="uploaded-image"
-            />
+          <div className="preview-container">
+            <section className="preview-section">
+              <h2>Uploaded Image Preview</h2>
+              <img
+                src={uploadedImage}
+                alt="Uploaded Preview"
+                className="uploaded-image"
+              />
+            </section>
           </div>
         )}
-      </form>
 
-      {/* Display the processed image with bounding boxes */}
-      {selectedImage && !isLoading && (
-        <div className="canvas-container">
-          <h3>Processed Image with Bounding Boxes</h3>
-          <canvas
-            ref={canvasRef}
-            style={{
-              border: "1px solid black",
-              maxWidth: "100%",
-              cursor: "pointer",
-            }}
-            onClick={() => setIsModalOpen(true)} // Open modal on click
-          ></canvas>
-        </div>
-      )}
-
-      {/* Modal for full-size image */}
-      {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <span className="close" onClick={() => setIsModalOpen(false)}>
-              &times;
-            </span>
-            <canvas ref={canvasRef} style={{ width: "100%" }}></canvas>
+        {selectedImage && !isLoading && (
+          <div className="processed-container">
+            <section className="processed-section">
+              <h2>Processed Image</h2>
+              <canvas
+                ref={canvasRef}
+                onClick={() => setIsModalOpen(true)}
+              ></canvas>
+            </section>
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Scrollbox for attendance messages */}
-      {authResults.length > 0 && (
-        <div className="scrollbox">
-          <h3>Attendance Results</h3>
-          {authResults.map((result, index) => (
-            <div key={index} className={result.success ? "success" : "failure"}>
-              {result.message}
+        {isModalOpen && (
+          <div className="modal">
+            <div className="modal-content">
+              <span className="close" onClick={() => setIsModalOpen(false)}>
+                &times;
+              </span>
+              <canvas ref={canvasRef}></canvas>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        )}
+
+        {authResults.length > 0 && (
+          <div className="results-container">
+            <section className="results-section">
+              <h2>Attendance Results</h2>
+              <div className="results-content">
+                {authResults.map((result, index) => (
+                  <div
+                    key={index}
+                    className={`result-card ${
+                      result.success ? "success" : "failure"
+                    }`}
+                  >
+                    {result.message}
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+        )}
+      </main>
     </div>
   );
 }
