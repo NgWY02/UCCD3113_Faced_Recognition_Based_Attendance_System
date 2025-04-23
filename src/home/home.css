@@ -1,0 +1,159 @@
+/* Reset margins and padding for the entire page */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+.container {
+  max-width: 100%; /* Ensure the container spans the full width */
+  padding: 0 15px; /* Add padding for spacing */
+  box-sizing: border-box; /* Include padding in the element's width */
+  height: auto;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* General Styles */
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f8f9fa; /* Light gray background */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Hero Section */
+.hero-background {
+  background-image: url('/assets/hero_background.jpg'); /* Replace with your image path */
+  background-size: cover; /* Ensure the image covers the entire section */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  color: white; /* Ensure text is readable */
+  height: 100vh; /* Full viewport height */
+  width: 100%; /* Full viewport width */
+  display: flex;
+  align-items: center; /* Vertically center content */
+  justify-content: center; /* Horizontally center content */
+  text-align: center;
+  padding: 0 15px; /* Add padding for spacing */
+  box-sizing: border-box; /* Include padding in the element's width */
+}
+
+.hero-background h1 {
+  font-size: 3.5rem; /* Larger font size for the title */
+  font-weight: bold;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7); /* Add text shadow for better readability */
+}
+
+.hero-background p {
+  font-size: 1.25rem;
+  margin-top: 20px;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7); /* Add text shadow for better readability */
+}
+
+.hero-background a {
+  font-size: 1.25rem;
+  padding: 10px 30px;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.hero-background a:hover {
+  background-color: #0056b3;
+}
+
+/* Features Section */
+.features {
+  background-color: #ffffff; /* White background */
+  padding: 80px 20px; /* Add padding for spacing */
+}
+
+.features h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.features i {
+  color: #007bff; /* Primary blue for icons */
+  transition: transform 0.3s ease; /* Smooth scaling effect */
+}
+
+.features i:hover {
+  transform: scale(1.2); /* Slightly enlarge icons on hover */
+}
+
+.features h3 {
+  font-size: 1.5rem;
+  margin-top: 15px;
+}
+
+.features p {
+  font-size: 1rem;
+  color: #6c757d; /* Muted gray for descriptions */
+}
+
+/* About Us Section */
+.about {
+  background-color: #f8f9fa; /* Light gray background */
+  padding: 60px 20px; /* Add padding for spacing */
+}
+
+.about h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.about p {
+  font-size: 1.25rem;
+  color: #555; /* Muted text color */
+  line-height: 1.8; /* Increase line height for readability */
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-background h1 {
+    font-size: 2.5rem; /* Adjust font size for tablets */
+  }
+
+  .hero-background p {
+    font-size: 1rem; /* Adjust paragraph font size */
+  }
+
+  .hero-background a {
+    font-size: 1rem; /* Adjust button font size */
+    padding: 8px 20px; /* Adjust button padding */
+  }
+
+  .features h2 {
+    font-size: 2rem;
+  }
+
+  .features h3 {
+    font-size: 1.25rem;
+  }
+
+  .features p {
+    font-size: 0.9rem;
+  }
+
+  .features i {
+    font-size: 2.5rem; /* Reduce icon size */
+  }
+
+  .about h2 {
+    font-size: 2rem;
+  }
+
+  .about p {
+    font-size: 1rem;
+  }
+}

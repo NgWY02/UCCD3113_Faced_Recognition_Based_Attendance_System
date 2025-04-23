@@ -1,13 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom"; // Import Link for routing to other pages
 import "./navbar.css";
 
 function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm fixed-top no-rounded">
       <div className="container">
-        <a className="navbar-brand fw-bold" href="#">
+      <Link className="navbar-brand fw-bold" to="/">
           UTAR Attendance System
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -22,19 +23,19 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <a className="nav-link fw-semibold" href="#home">
+              <Link className="nav-link fw-semibold" to="/">
                 Home
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link fw-semibold" href="#record-attendance">
+              <Link className="nav-link fw-semibold" to="/attendance">
                 Record Attendance
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link fw-semibold" href="#architecture">
+              <Link className="nav-link fw-semibold" to="/architecture">
                 Architecture
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <a className="nav-link fw-semibold" href="#about">

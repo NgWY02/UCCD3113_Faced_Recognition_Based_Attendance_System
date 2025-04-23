@@ -17,7 +17,7 @@ body {
     border-radius: 15px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
     text-align: center;
-    width: 1000px; /* Fixed width */
+    width: 800px; /* Fixed width */
     margin: 20px 0; /* Add spacing between the App div and the top/bottom */
   }
   
