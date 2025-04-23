@@ -1,0 +1,99 @@
+body {
+    font-family: Arial, sans-serif;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align content to the top */
+    min-height: 100vh; /* Ensure the background covers the full height of the content */
+  }
+  
+  .App {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 1000px; /* Fixed width */
+    margin: 20px 0; /* Add spacing between the App div and the top/bottom */
+  }
+  
+  h2 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  input[type='file'] {
+    margin-bottom: 20px;
+  }
+  
+  button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  button:disabled {
+    background-color: #6c757d;
+    cursor: not-allowed;
+  }
+  
+  button:hover:enabled {
+    background-color: #218838;
+  }
+  
+  .success {
+    color: green;
+    margin-top: 10px;
+    text-align: left;
+  }
+  
+  .failure {
+    color: red;
+    margin-top: 10px;
+    text-align: left;
+  }
+  
+  .uploaded-image-container {
+    margin-top: 20px;
+  }
+  
+  .uploaded-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+  }
+  
+  .canvas-container {
+    margin-top: 20px;
+  }
+  
+  canvas {
+    border-radius: 10px;
+    border: 2px solid #ddd;
+  }
+  
+  .scrollbox {
+    margin-top: 20px;
+    max-height: 150px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    text-align: left;
+  }

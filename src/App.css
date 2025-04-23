@@ -1,38 +1,206 @@
-.App {
+/* General Styles */
+body {
+  font-family: "Arial", sans-serif;
+  background-color: #f8f9fa; /* Light gray background */
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  background-color: #333; /* Dark header background */
+  color: white;
+  padding: 10px 0;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.App {
+  background-color: #ffffff; /* White background for the main container */
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  text-align: center;
+  width: 800px; /* Fixed width for desktop */
+  max-width: 90%; /* Responsive for smaller screens */
+  margin: 20px auto; /* Center the container */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Hero Section Background */
+.hero-background {
+  background-image: url('../assets/hero_background.jpg'); /* Replace with your image path */
+  background-size: cover; /* Ensure the image covers the entire section */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent the image from repeating */
+  color: white; /* Ensure text is readable */
+  padding: 100px 0; /* Add more padding for a spacious look */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.hero-background h1 {
+  font-size: 3.5rem; /* Increase font size for better visibility */
+  font-weight: bold;
+  color: white; /* Explicitly set text color to white */
+  text-shadow: 1px 1px 15px rgba(0, 0, 0, 0.7); /* Add text shadow for better readability */
+}
+
+.hero-background p {
+  font-size: 1.25rem;
+  margin-top: 20px;
+  font-weight: bold;
+  color: white; /* Explicitly set text color to white */
+  text-shadow: 1px 1px 15px rgba(0, 0, 0, 0.7); /* Add text shadow for better readability */
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #333;
+}
+
+h2 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+form {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+input[type="file"] {
+  margin-bottom: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+button {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+button:hover:enabled {
+  background-color: #218838;
+}
+
+.success {
+  color: green;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.failure {
+  color: red;
+  margin-top: 10px;
+  text-align: left;
+}
+
+.uploaded-image-container {
+  margin-top: 20px;
+}
+
+.uploaded-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+}
+
+.canvas-container {
+  margin-top: 20px;
+}
+
+canvas {
+  border-radius: 10px;
+  border: 2px solid #ddd;
+}
+
+.scrollbox {
+  margin-top: 20px;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  text-align: left;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  text-align: center;
+}
+
+.main-content h1 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.main-content p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.6;
+}
+
+main {
+  flex-grow: 1; /* Ensures the main content takes up available space */
+  padding: 20px;
+  text-align: center;
+}
+
+.features .bi {
+  font-size: 3rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .navbar ul {
+    flex-direction: column;
+    gap: 10px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .main-content h1 {
+    font-size: 24px;
   }
+
+  .main-content p {
+    font-size: 14px;
+  }
+}
+
+/* Features Section */
+.features {
+  background-color: #f8f9fa; /* Light gray background for better contrast */
+  padding: 60px 0; /* Increased padding for more breathing room */
+}
+
+.features h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.features .text-muted {
+  font-size: 1rem;
+  color: #6c757d; /* Muted gray for descriptions */
+}
+
+.features i {
+  color: #007bff; /* Primary blue for icons */
+  transition: transform 0.3s ease; /* Smooth scaling effect */
+}
+
+.features i:hover {
+  transform: scale(1.2); /* Slightly enlarge icons on hover */
 }

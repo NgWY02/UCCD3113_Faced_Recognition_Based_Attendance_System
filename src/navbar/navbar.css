@@ -1,0 +1,57 @@
+/* Navbar Styles */
+.navbar {
+    background-color: #343a40; /* Dark gray background */
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-radius: 0; /* Remove rounded corners */
+    z-index: 1030; /* Ensure it stays above other elements */
+  }
+  
+  .navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .navbar li {
+    color: white;
+    cursor: pointer;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+  }
+  
+  .navbar li:hover,
+  .navbar li.active {
+    background-color: #0056b3; /* Darker blue for hover and active state */
+    color: #ffffff; /* Ensure text remains white */
+    transform: scale(1.05); /* Slight scaling effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  }
+  
+  .navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+  }
+  
+  .nav-link {
+    cursor: pointer;
+    color: #ffffff !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    color: #ffc107 !important; /* Yellow hover effect */
+  }
+  
+  .nav-link.active {
+    font-weight: bold;
+    color: #ffc107 !important; /* Yellow for active links */
+    background-color: #0056b3; /* Darker blue for active state */
+    border-radius: 5px;
+    padding: 5px 10px;
+  }
