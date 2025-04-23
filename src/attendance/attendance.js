@@ -12,17 +12,16 @@ function Attendance() {
   const [boundingBoxes, setBoundingBoxes] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isWebcamOn, setIsWebcamOn] = useState(false); // State for webcam
-  const [capturedImage, setCapturedImage] = useState(null); // State for captured image
+  const [isWebcamOpen, setIsWebcamOpen] = useState(false); // State for webcam
   const canvasRef = useRef(null);
-  const webcamRef = useRef(null); // Ref for the webcam
+  const webcamRef = useRef(null); // Ref for webcam
 
   async function sendImages(e) {
     e.preventDefault();
-    if (images.length === 0 && !capturedImage) {
+    if (images.length === 0) {
       setAuthResults([
         {
-          message: "No images selected or captured. Please upload or capture an image.",
+          message: "No images selected. Please upload images.",
           success: false,
         },
       ]);
@@ -35,9 +34,7 @@ function Attendance() {
     setUploadedImage(null);
     setIsLoading(true);
 
-    const imageList = capturedImage ? [capturedImage] : images;
-
-    for (const image of imageList) {
+    for (const image of images) {
       const studentImageName = uuid.v4();
 
       try {
@@ -138,8 +135,15 @@ function Attendance() {
 
   function captureImage() {
     const imageSrc = webcamRef.current.getScreenshot();
-    setCapturedImage(imageSrc);
-    setIsWebcamOn(false); // Turn off the webcam after capturing
+    if (imageSrc) {
+      fetch(imageSrc)
+        .then((res) => res.blob())
+        .then((blob) => {
+          setImages([blob]);
+          setUploadedImage(imageSrc);
+          setIsWebcamOpen(false);
+        });
+    }
   }
 
   useEffect(() => {
@@ -186,7 +190,7 @@ function Attendance() {
 
       <main className="main-content">
         <section className="upload-section">
-          <h2>Upload or Capture Images</h2>
+          <h2>Upload Images</h2>
           <form onSubmit={sendImages}>
             <label className="upload-area">
               <input
@@ -202,15 +206,10 @@ function Attendance() {
               {isLoading ? "Processing..." : "Record Attendance"}
             </button>
           </form>
-          <button
-            className="btn btn-secondary mt-3"
-            onClick={() => setIsWebcamOn(true)}
-          >
-            Capture Image
-          </button>
+          <button onClick={() => setIsWebcamOpen(true)}>Open Webcam</button>
         </section>
 
-        {isWebcamOn && (
+        {isWebcamOpen && (
           <div className="webcam-container">
             <Webcam
               audio={false}
@@ -218,34 +217,8 @@ function Attendance() {
               screenshotFormat="image/jpeg"
               className="webcam-preview"
             />
-            <button className="btn btn-primary mt-3" onClick={captureImage}>
-              Take Photo
-            </button>
-          </div>
-        )}
-
-        {capturedImage && (
-          <div className="preview-container">
-            <section className="preview-section">
-              <h2>Captured Image Preview</h2>
-              <img
-                src={capturedImage}
-                alt="Captured Preview"
-                className="uploaded-image"
-              />
-              <button
-                className="btn btn-secondary mt-3"
-                onClick={() => setCapturedImage(null)}
-              >
-                Retake Photo
-              </button>
-              <button
-                className="btn btn-primary mt-3"
-                onClick={sendImages}
-              >
-                Submit Photo
-              </button>
-            </section>
+            <button onClick={captureImage}>Capture Image</button>
+            <button onClick={() => setIsWebcamOpen(false)}>Close Webcam</button>
           </div>
         )}
 
