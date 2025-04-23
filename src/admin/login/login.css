@@ -1,0 +1,122 @@
+/* Ensure consistent scrollbar across pages */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll; /* Always show scrollbar */
+  }
+  
+  .page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .login-container {
+    max-width: 600px; /* Increased width */
+    margin: auto;
+    padding: 60px; /* Increased padding */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    color: #1a1a2e;
+  }
+  
+  .form-group {
+    margin-bottom: 20px; /* Increased spacing between form groups */
+    text-align: left;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  input {
+    width: 100%;
+    padding: 12px; /* Slightly larger input fields */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #1a1a2e;
+  }
+  
+  /* Reserve space for the error message */
+  .error-message {
+    color: #e94560;
+    margin-top: 10px;
+    min-height: 25px; /* Fixed height to prevent layout shift */
+    font-size: 0.9rem;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease; /* Smooth transition */
+  }
+  
+  .error-message.visible {
+    opacity: 1; /* Show when error exists */
+  }
+  
+  .login-button {
+    width: 100%;
+    padding: 12px; /* Larger button */
+    background-color: #1a1a2e;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem; /* Slightly larger font size */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-button:hover {
+    background-color: #0f3460;
+  }
+
+  .success-container {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .success-container h2 {
+    color: #1a1a2e;
+    margin-bottom: 10px;
+  }
+  
+  .success-container p {
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .success-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .success-button {
+    padding: 10px 20px;
+    background-color: #1a1a2e;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .success-button:hover {
+    background-color: #0f3460;
+  }

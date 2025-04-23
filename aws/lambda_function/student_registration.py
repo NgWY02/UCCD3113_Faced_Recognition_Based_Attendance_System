@@ -52,11 +52,13 @@ def index_student_image(bucket_name, object_key):
     return response
 
 def register_student(faceID, firstName, lastName):
-    # Register the student in DynamoDB
+    # Register the student in DynamoDB with additional attributes
     studentTable.put_item(
         Item={
             'rekognitionID': faceID,
             'firstName': firstName,
-            'lastName': lastName
+            'lastName': lastName,
+            'attendanceStatus': False,  # Default attendance status
+            'record_time': None         # Default record time
         }
     )

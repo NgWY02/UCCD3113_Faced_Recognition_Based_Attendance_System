@@ -2,6 +2,7 @@ import boto3
 import json
 from PIL import Image, ImageDraw
 import io
+from datetime import datetime  # Import datetime for current time
 
 s3 = boto3.client('s3')
 rekognition = boto3.client('rekognition', region_name='ap-southeast-1')
@@ -76,6 +77,19 @@ def lambda_handler(event, context):
             )
             if 'Item' in face_data:
                 print("Student found: " + json.dumps(face_data['Item']))
+                
+                # Update the student's attendance status and record time
+                studentTable.update_item(
+                    Key={
+                        'rekognitionID': match['Face']['FaceId']
+                    },
+                    UpdateExpression="SET attendanceStatus = :status, record_time = :time",
+                    ExpressionAttributeValues={
+                        ':status': True,
+                        ':time': datetime.now().strftime('%Y-%m-%d %H:%M:%S')  # Current time
+                    }
+                )
+                
                 recognized_students.append({
                     'firstName': face_data['Item']['firstName'],
                     'lastName': face_data['Item']['lastName'],
@@ -126,4 +140,3 @@ def draw_bounding_boxes(image_bytes, recognized_students):
     output = io.BytesIO()
     image.save(output, format='JPEG')
     return output.getvalue()
-

@@ -1,73 +1,132 @@
+
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 /* Navbar Styles */
 .navbar {
-  position: fixed; /* Fix the navbar at the top */
-  background-color: #343a40; /* Dark gray background */
-  width: 100%; /* Ensure the navbar spans the full width */
-  padding: 10px 20px; /* Add padding on both sides */
-  margin-bottom: 20px;
-  box-sizing: border-box; /* Include padding and border in the element's width */
-  overflow: hidden; /* Prevent overflow caused by hover effects */
-  height: 80px; /* Set a fixed height for the navbar */
-  z-index: 1000; /* Ensure it stays above other content */
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #1a1a2e; /* Dark navy background */
+  padding: 10px 20px;
+  z-index: 1000;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .navbar .container {
-  max-width: 1200px; /* Limit the width of the navbar content */
-  margin: 0 auto; /* Center the navbar content */
-  padding: 0 15px; /* Add padding inside the container */
   display: flex;
-  justify-content: space-between; /* Space out the brand and links */
-  align-items: center; /* Vertically align items */
-}
-
-.navbar ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  align-items: center; /* Ensure vertical alignment */
-}
-
-.navbar li {
-  color: white;
-  cursor: pointer;
-  padding: 10px 20px; /* Ensure consistent padding */
-  border-radius: 5px;
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effects */
-  height: 100%; /* Match the navbar height */
-  display: flex;
-  align-items: center; /* Center items vertically */
-}
-
-.navbar li:hover,
-.navbar li.active {
-  background-color: #0056b3; /* Darker blue for hover and active state */
-  color: #ffffff; /* Ensure text remains white */
-  transform: none; /* Remove scaling effect */
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .navbar-brand {
+  font-size: 1.8rem;
   font-weight: bold;
-  font-size: 1.5rem;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.navbar-toggler {
+  display: none;
+  background-color: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.navbar-toggler-icon {
+  width: 25px;
+  height: 3px;
+  background-color: #1a1a2e;
+  display: block;
+  margin: 5px 0;
+}
+
+.navbar-nav {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.nav-item {
+  position: relative;
 }
 
 .nav-link {
-  cursor: pointer;
-  color: #ffffff !important;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1rem;
   font-weight: 500;
-  transition: color 0.3s ease;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .nav-link:hover {
-  color: beige !important; /* Beige for hover effect */
+  background-color: #0056b3 ;
+  color: white
 }
 
-.nav-link.active {
-  font-weight: bold;
-  color: #ffc107 !important; /* Yellow for active links */
-  background-color: #0056b3; /* Darker blue for active state */
+.nav-item.dropdown .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #16213e; /* Slightly lighter navy */
   border-radius: 5px;
-  padding: 5px 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+  z-index: 1050;
+}
+
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-item {
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px 20px;
+  display: block;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #e94560;
+  color: #ffffff;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .navbar-toggler {
+    display: block;
+  }
+
+  .navbar-nav {
+    display: none;
+    flex-direction: column;
+    gap: 0;
+    background-color: #1a1a2e;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 10px 0;
+  }
+
+  .navbar-nav.active {
+    display: flex;
+  }
+
+  .nav-link {
+    padding: 10px 20px;
+  }
 }

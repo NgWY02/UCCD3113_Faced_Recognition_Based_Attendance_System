@@ -1,19 +1,3 @@
-/* Reset margins and padding for the entire page */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-}
-
-.container {
-  max-width: 100%; /* Ensure the container spans the full width */
-  padding: 0 15px; /* Add padding for spacing */
-  box-sizing: border-box; /* Include padding in the element's width */
-  height: auto;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-}
-
 /* General Styles */
 body {
   font-family: "Arial", sans-serif;
