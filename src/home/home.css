@@ -27,12 +27,12 @@ body {
 
 /* Hero Section */
 .hero-background {
-  background-image: url('/assets/hero_background.jpg'); /* Replace with your image path */
+  background-image: url('../assets/hero_background.jpg'); /* Replace with your image path */
   background-size: cover; /* Ensure the image covers the entire section */
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Prevent the image from repeating */
   color: white; /* Ensure text is readable */
-  height: 60vh; /* Full viewport height */
+  height: 70vh; /* Full viewport height */
   width: 100%; /* Full viewport width */
   display: flex;
   align-items: center; /* Vertically center content */
