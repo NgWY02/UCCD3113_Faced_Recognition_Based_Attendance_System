@@ -20,6 +20,7 @@ body {
   color: black;
   text-align: center;
   padding: 30px 0;
+  width: 100%;
 }
 
 .title-bar h1 {
@@ -28,12 +29,20 @@ body {
   font-weight: bold;
 }
 
+.main-content {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
 .upload-section {
   background: white;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
   width: 90%;
   max-width: 600px;
   text-align: center;
@@ -47,8 +56,9 @@ body {
   border: 2px dashed #ccc;
   padding: 20px;
   border-radius: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   cursor: pointer;
+  width: 100%;
 }
 
 .upload-area:hover {
@@ -64,6 +74,49 @@ body {
   color: #666;
 }
 
+.upload-section form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-section button {
+  margin-bottom: 10px;
+  width: 200px;
+}
+
+/* Webcam container styling */
+.webcam-container {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 95%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.webcam-preview {
+  width: 100%;
+  max-height: 600px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.webcam-container button {
+  margin: 0 5px 10px;
+}
+
+.webcam-controls {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
 button {
   background-color: #007bff;
   color: white;
@@ -71,6 +124,11 @@ button {
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 
 button:disabled {
@@ -81,11 +139,43 @@ button:disabled {
 .preview-container,
 .processed-container,
 .results-container {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 700px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin-bottom: 30px;
 }
+
+.preview-section,
+.processed-section,
+.results-section {
+  width: 100%;
+  text-align: center;
+}
+
+.results-section h2 {
+  margin-top: 0;
+  color: #2c3e50;
+  font-size: 24px;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.results-section h2:after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: #3498db;
+  margin: 8px auto 0;
+}
+
+/* Removed summary styling */
 
 .uploaded-image {
   max-width: 100%;
@@ -119,6 +209,7 @@ canvas {
   max-width: 90%;
   max-height: 90%;
   overflow: auto;
+  position: relative;
 }
 
 .modal-content canvas {
@@ -131,28 +222,170 @@ canvas {
   right: 10px;
   font-size: 24px;
   cursor: pointer;
+  color: #333;
 }
 
 .results-content {
   width: 100%;
-  max-width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .result-card {
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  border-radius: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.result-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .result-card.success {
-  background-color: #d4edda;
+  background-color: #ebfbee;
   color: #155724;
+  border-left: 4px solid #28a745;
 }
 
 .result-card.failure {
-  background-color: #f8d7da;
+  background-color: #fff5f5;
   color: #721c24;
+  border-left: 4px solid #dc3545;
+}
+
+.result-message {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.result-icon {
+  margin-right: 12px;
+  font-size: 20px;
+}
+
+.result-info {
+  flex: 1;
+  text-align: left;
+}
+
+.result-name {
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.result-details {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.result-time {
+  font-size: 12px;
+  color: #6c757d;
+  text-align: right;
+}
+
+.empty-results {
+  padding: 30px 20px;
+  text-align: center;
+  color: #7f8c8d;
+}
+
+.empty-results p {
+  margin: 10px 0 0;
+}
+
+@media (max-width: 600px) {
+  .results-summary {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .result-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .result-message {
+    margin-bottom: 10px;
+  }
+  
+  .result-time {
+    text-align: center;
+  }
+}
+
+.image-results-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 1200px;
+  gap: 20px;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.image-display-container {
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.preview-container,
+.processed-container {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+.results-container {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  min-width: 300px;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+  .image-results-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .image-display-container,
+  .results-container {
+    width: 90%;
+    max-width: 700px;
+  }
+  
+  .results-container {
+    max-height: 400px;
+    margin-bottom: 30px;
+  }
 }
