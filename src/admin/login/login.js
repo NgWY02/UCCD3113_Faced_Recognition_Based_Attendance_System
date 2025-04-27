@@ -81,7 +81,7 @@ function Login() {
               </button>
               <button
                 className="success-button"
-                onClick={() => handleNavigate("/admin/register-student")}
+                onClick={() => handleNavigate("/admin/register")}
               >
                 Register Student
               </button>
