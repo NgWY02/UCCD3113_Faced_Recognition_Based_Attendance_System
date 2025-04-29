@@ -192,7 +192,7 @@ function Attendance() {
 
         if (boundingBoxes && boundingBoxes.length > 0) {
           boundingBoxes.forEach((box) => {
-            ctx.strokeStyle = "green"; // Bounding box color
+            ctx.strokeStyle = "lightgreen"; // Bounding box color
             ctx.lineWidth = 2;
             ctx.strokeRect(
               box.Left * img.width,
@@ -201,7 +201,7 @@ function Attendance() {
               box.Height * img.height
             );
 
-            ctx.fillStyle = "green";
+            ctx.fillStyle = "lightgreen";
             ctx.font = "16px Arial";
             ctx.fillText(
               `${box.name} (CS: ${box.confidence})`,
