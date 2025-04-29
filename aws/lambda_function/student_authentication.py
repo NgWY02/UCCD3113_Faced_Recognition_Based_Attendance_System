@@ -4,18 +4,25 @@ from PIL import Image, ImageDraw
 import io
 from datetime import datetime  # Import datetime for current time
 
+# Initialize AWS clients for S3, Rekognition, and DynamoDB
 s3 = boto3.client('s3')
 rekognition = boto3.client('rekognition', region_name='ap-southeast-1')
-dynamodbTableName = 'utar-student'
+dynamodbTableName = 'utar-student' # DynamoDB table name for student details
 dynamodb = boto3.resource('dynamodb', region_name='ap-southeast-1')
 studentTable = dynamodb.Table(dynamodbTableName)
-bucketName = 'utar-attendance-images'
+bucketName = 'utar-attendance-images' # S3 bucket name for attendee images
 
 def lambda_handler(event, context):
+    """
+    Main Lambda function to process student authentication requests.
+    """
     # Log the event for debugging purposes
     print("Received event: " + str(event))
     
+    # Extract the object key (image file name) from the query string parameters
     objectKey = event['queryStringParameters']['objectKey']
+    
+    # Retrieve the image from the S3 bucket
     image_object = s3.get_object(Bucket=bucketName, Key=objectKey)
     image_bytes = image_object['Body'].read()
     
@@ -59,17 +66,19 @@ def lambda_handler(event, context):
         cropped_face.save(cropped_face_bytes, format='JPEG')
         cropped_face_bytes = cropped_face_bytes.getvalue()
         
-        # Search for the face in the collection
+        # Search for the face in the Rekognition collection
         response = rekognition.search_faces_by_image(
-            CollectionId='student-collection',
+            CollectionId='student-collection', # Collection ID in Rekognition
             Image={'Bytes': cropped_face_bytes},
             FaceMatchThreshold=80,  # Confidence threshold
             MaxFaces=1  # Only match the most likely face
         )
         
+        # Process matched faces
         for match in response.get('FaceMatches', []):  # Safely handle if 'FaceMatches' is missing
             print(match['Face']['FaceId'], match['Face']['Confidence'])
             
+            # Retrieve student details from DynamoDB using the FaceId
             face_data = studentTable.get_item(
                 Key={
                     'rekognitionID': match['Face']['FaceId']
@@ -90,6 +99,7 @@ def lambda_handler(event, context):
                     }
                 )
                 
+                # Append recognized student details to the list
                 recognized_students.append({
                     'firstName': face_data['Item']['firstName'],
                     'lastName': face_data['Item']['lastName'],
@@ -97,28 +107,36 @@ def lambda_handler(event, context):
                     'boundingBox': bounding_box  # Include bounding box for the response
                 })
     
+    # Return success response if students are recognized
     if recognized_students:
         return buildResponse(200, {
             'Message': 'Success',
             'recognizedStudents': recognized_students
         })
     
+    # Return failure response if no students are recognized
     print("No students could be recognized!")
     return buildResponse(403, {
         'Message': 'No students found!'
     })
             
-def buildResponse(statusCode, body = None):
+def buildResponse(statusCode, body=None):
+    """
+    Build an HTTP response for the API Gateway.
+    """
     return {
         'statusCode': statusCode,
         'headers': {
             'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*',  # Allow all origins
+            'Access-Control-Allow-Origin': '*',
         },
         'body': json.dumps(body)
     }
 
 def draw_bounding_boxes(image_bytes, recognized_students):
+    """
+    Draw bounding boxes around recognized faces and label them with student names.
+    """
     image = Image.open(io.BytesIO(image_bytes))
     draw = ImageDraw.Draw(image)
     
@@ -132,8 +150,10 @@ def draw_bounding_boxes(image_bytes, recognized_students):
         width = int(bounding_box['Width'] * image_width)
         height = int(bounding_box['Height'] * image_height)
         
-        # Draw rectangle
+        # Draw rectangle around the face
         draw.rectangle([left, top, left + width, top + height], outline="red", width=3)
+        
+        # Add text label with the student's name
         draw.text((left, top - 10), f"{student['firstName']} {student['lastName']}", fill="red")
     
     # Save or return the modified image
