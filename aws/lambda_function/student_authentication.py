@@ -133,30 +133,3 @@ def buildResponse(statusCode, body=None):
         'body': json.dumps(body)
     }
 
-def draw_bounding_boxes(image_bytes, recognized_students):
-    """
-    Draw bounding boxes around recognized faces and label them with student names.
-    """
-    image = Image.open(io.BytesIO(image_bytes))
-    draw = ImageDraw.Draw(image)
-    
-    for student in recognized_students:
-        bounding_box = student['boundingBox']
-        image_width, image_height = image.size
-        
-        # Calculate pixel coordinates
-        left = int(bounding_box['Left'] * image_width)
-        top = int(bounding_box['Top'] * image_height)
-        width = int(bounding_box['Width'] * image_width)
-        height = int(bounding_box['Height'] * image_height)
-        
-        # Draw rectangle around the face
-        draw.rectangle([left, top, left + width, top + height], outline="red", width=3)
-        
-        # Add text label with the student's name
-        draw.text((left, top - 10), f"{student['firstName']} {student['lastName']}", fill="red")
-    
-    # Save or return the modified image
-    output = io.BytesIO()
-    image.save(output, format='JPEG')
-    return output.getvalue()
