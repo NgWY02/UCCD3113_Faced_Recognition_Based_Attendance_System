@@ -1,5 +1,5 @@
 [build]
-  publish = "home"
+  publish = "src/home"
 
 [[redirects]]
   from = "/*"
