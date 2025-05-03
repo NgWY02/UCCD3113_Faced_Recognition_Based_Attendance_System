@@ -1,4 +1,7 @@
+[build]
+  publish = "home"
+
 [[redirects]]
-from = "/*"
-to  = "/home.js"
-status = 200
+  from = "/*"
+  to = "/index.html"
+  status = 200
